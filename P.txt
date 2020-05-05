@@ -1,0 +1,62 @@
+<S> := <assemble>
+<assemble> := assemble-begin <product> <setup> start <steps> end assemble-end
+<product> := <word>;
+<setup> := setup-begin <sets> setup-end
+<sets> := <set> | <set><sets>
+<set> := assembly #<identifier> [to-create] [in <coordinate>:<offset>:<unit>];
+<set> := hand <x-position>;
+<set> := bin <part> [in <coordinate>:<offset>:<unit>];
+<set> := tool <tool> [in <coordinate>:<offset>:<unit>];
+<set> := accessory <accessory> [in <coordinate>:<offset>:<unit>];
+<offset> := <digits>
+<unit> := mm | cm | mm
+<steps> := <step> | <step><steps>
+<step> := <make-assembly>
+<step> := <hand-action>:(<part>|<tool>) with <handused> [in assembly #<identifier>];
+<step> := <hand-action>:<handused> [in <coordinate>:<offset>:<unit>];
+<step> := <hand-action>:assembly #<identifier> with 
+ (assembly #<identifier> | <handused>);
+<step> := move:assembly #<identifier> with <handused> from <coordinate>:<offset> 
+to <coordinate>:<offset>:<unit>;
+<step> := <substep> [in <coordinate>:<offset>:<unit>];
+<step> := <repetition>
+<step> := <any-order>
+<substep> := <hammer-action>:<hammer> | <wrench-action>:<wrench> 
+| <screwdriver-action>:<screwdriver> | <pliers-action>:<pliers> 
+| <driller-action>:<driller> with <accessory> | <clamp-action>:clamp 
+| <ratchet-action>:ratchet with (socket|none) | <screwdriver-action>:nut_driver
+<handused> := hand | hand-nondominant | hand-any | hand-both
+<hand-action> := put | hold | take | grip | release | push | spin | turn | join |move
+<part> := bolt | gears | nut | screw | washer
+<accessory> := drill_bit | socket | none
+<make-assembly> := assembly-start #<identifier>:<steps> assembly-end;
+<repetition> := repeat:<steps> until <digits> times;
+<in-any-order> := any-order-begin <steps> any-order-end;
+<tool> := <hammer> | <wrench> | <screwdriver> | <pliers> | <driller> | ratchet| clamp 
+| nut_driver
+<hammer> := hammer_ball_pein | hammer_claw
+<wrench> := wrench_adjustable | wrench_allen | wrench_combination
+<screwdriver> := screwdriver_electric | screwdriver_phillips | screwdriver_slotted
+<pliers> := pliers_diagonal | pliers_lineman | pliers_locking | pliers_long_nose
+<driller> := drill_gun | drill_screw
+<hammer-action> := nail | hammer_out | hit
+<wrench-action> := pull | tight | locknut
+<screwdriver-action> := screw
+<pliers-action> := loosen | cut | hold | tighten
+<driller-action> := drilling
+<clamp-action> := loosen | tighten
+<ratchet-action> := turn
+<coordinate> := <sign><digits>,<sign><digits>
+<sign> := <void> | <positive> | <negative>
+<void> := /* PALABRA VACIA */
+<positive> := +
+<negative> := -
+<position> := <x-position> | <y-position> | <y-position>-<x-position>
+<x-position> := rigth | left
+<y-position> := upper | lower
+<identifier> := <char> | <char><word>
+<word> := <alpha><word>
+<alpha> := <char> | <digit> | <void>
+<char> := a | b | ... | z | A | B |...| Z | _ | - | & | ' ' | . | , | @
+<digits> := <digit> | <digit><digits>
+<digit> := 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
