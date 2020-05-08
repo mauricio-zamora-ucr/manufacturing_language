@@ -48,13 +48,13 @@ to <coordinate>:<offset>:<unit>;
 <ratchet-action> := turn
 <coordinate> := <sign><digits>,<sign><digits>
 <sign> := <void> | <positive> | <negative>
-<void> := /* PALABRA VACIA */
+<void> := ''
 <positive> := +
 <negative> := -
 <position> := <x-position> | <y-position> | <y-position>-<x-position>
 <x-position> := rigth | left
 <y-position> := upper | lower
-<identifier> := <char> | <char><word>
+<identifier> := <char> | <char><word> | #bytes#
 <word> := <alpha><word>
 <alpha> := <char> | <digit> | <void>
 <char> := a | b | ... | z | A | B |...| Z | _ | - | & | ' ' | . | , | @
